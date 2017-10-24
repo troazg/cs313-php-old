@@ -40,6 +40,7 @@ include('login.php');
 		height: 100%;
 		background-size: contain;
 		background-position: center;
+		background-repeat: no-repeat;
 	}
 
 	#signUpForm {
