@@ -1,0 +1,5 @@
+<?php
+
+$link = mysqli_connect("localhost", "cl59-journaldb", "dVceT/3XJ", "cl59-journaldb");
+
+?>
