@@ -58,7 +58,7 @@ $diary = $row['diary'];
 	#main {
 		background-image: url("note.jpg");
 		width: 100%;
-		height: 653px;
+		height: 100px;
 		background-size: cover;
 		background-position: center;
 	}

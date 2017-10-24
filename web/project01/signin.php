@@ -47,7 +47,7 @@ include('login.php');
 	#main {
 		background-image: url("note.jpg");
 		width: 100%;
-		height: 653px;
+		height: 100%;
 		background-size: cover;
 		background-position: center;
 	}
