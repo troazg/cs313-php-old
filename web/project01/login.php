@@ -20,6 +20,8 @@ include("connection.php");
 
 if ($_POST['submit'] == "Sign Up") {
 
+	debug_to_console('You clicked sign up');
+
 	if (!$_POST['email']) 
 		$error .= "<br>Please enter your loginEmail";
 	else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
