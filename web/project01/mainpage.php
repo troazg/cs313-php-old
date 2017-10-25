@@ -9,7 +9,7 @@ function debug_to_console( $data ) {
     if ( is_array( $output ) )
         $output = implode( ',', $output);
 
-    echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
+    echo "<script type='text/javascript'>console.log( 'Debug Objects: " . $output . "' );</script>";
 }
 
 $query = "SELECT diary_text FROM diaries AS d JOIN users AS u ON d.diary_id = u.user_diary WHERE user_id = '".$_SESSION['id']."' LIMIT 1";
@@ -99,7 +99,7 @@ debug_to_console($diary);
 <div class="container text-center" id="main"> 
 
 	<?php debug_to_console("In the body"); ?>
-	<script>console.log("Vanilla")</script>
+	<script type="text/javascript">console.log("Vanilla")</script>
 	
 		
 
