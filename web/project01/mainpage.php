@@ -95,7 +95,7 @@ debug_to_console($diary);
   </head>
 <body>
 
-<div id="menuBar"></div>
+<div id="menuBar">123</div>
 <div class="container text-center" id="main"> 
 
 	<?php debug_to_console("In the body"); ?>
