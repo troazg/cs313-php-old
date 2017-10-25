@@ -2,6 +2,14 @@
 
 session_start();
 
+function debug_to_console( $data ) {
+    $output = $data;
+    if ( is_array( $output ) )
+        $output = implode( ',', $output);
+
+    echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
+}
+
 if ($_GET['logout'] == 1 AND $_SESSION['id']){
 
 	session_destroy();
@@ -37,7 +45,11 @@ if ($_POST['submit'] == "Sign Up") {
 
 		$query = "SELECT * FROM users WHERE user_email = '".pg_escape_string($db, $_POST['email'])."'";
 
+		debug_to_console($query);
+
 		$result = pg_query($db, $query);
+
+		debug_to_console($result);
 
 		$results = pg_num_rows($result);
 
@@ -52,6 +64,8 @@ if ($_POST['submit'] == "Sign Up") {
 			echo "You've been signed up!";
 
 			$query2 = "SELECT user_id FROM users WHERE user_email = '".pg_escape_string($db, $_POST['email'])."'";
+
+			debug_to_console($query2);
 
 			$results = pg_query($db, $query2);
 
