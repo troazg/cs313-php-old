@@ -94,12 +94,12 @@ debug_to_console($diary);
 
   </head>
 <body>
-<script type="text/javascript">console.log("Vanilla2")</script>
+<script type="text/javascript">console.log("Vanilla2");</script>
 <div id="menuBar">123</div>
 <div class="container text-center" id="main"> 
 
 	<?php debug_to_console("In the body"); ?>
-	<script type="text/javascript">console.log("Vanilla")</script>
+	<script type="text/javascript">console.log("Vanilla");</script>
 	
 		
 
