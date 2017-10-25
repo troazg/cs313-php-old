@@ -99,6 +99,7 @@ debug_to_console($diary);
 <div class="container text-center" id="main"> 
 
 	<?php debug_to_console("In the body"); ?>
+	<script>console.log("Vanilla")</script>
 	
 		
 
