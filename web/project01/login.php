@@ -13,7 +13,7 @@ include("connection.php");
 if ($_POST['submit'] == "Sign Up") {
 
 	if (!$_POST['email']) 
-		$error .= "<br>Please enter you loginEmail";
+		$error .= "<br>Please enter your loginEmail";
 	else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
 		$error .= "<br>Invalid email address";
 
@@ -35,23 +35,27 @@ if ($_POST['submit'] == "Sign Up") {
 		$error = "<strong>There were errors in your signup details:</strong> ".$error;
 	else {
 
-		$query = "SELECT * FROM users WHERE email = '".mysqli_real_escape_string($link, $_POST['email'])."'";
+		$query = "SELECT * FROM users WHERE user_email = '".pg_escape_string($db, $_POST['email'])."'";
 
-		$result = mysqli_query($link, $query);
+		$result = pg_query($db, $query);
 
-		$results = mysqli_num_rows($result);
+		$results = pg_num_rows($result);
 
 		if ($results)
 			$error = "There is already an account with that email address. Do you want to log in?";
 		else {
 
-			$query = "INSERT INTO `users` (`email`, `password`) VALUES ('".mysqli_real_escape_string($link, $_POST['email'])."', '".md5(md5($_POST['email']).$_POST['password'])."')";
+			$query = "INSERT INTO `users` (`user_email`, `user_password`) VALUES ('".pg_escape_string($db, $_POST['email'])."', '".md5(md5($_POST['email']).$_POST['password'])."')";
 
-			mysqli_query($link, $query);
+			pg_query($db, $query);
 
 			echo "You've been signed up!";
 
-			$_SESSION['id'] = mysqli_insert_id($link);
+			$query2 = "SELECT user_id FROM users WHERE user_email = '".pg_escape_string($db, $_POST['email'])."'";
+
+			$results = pg_query($db, $query2);
+
+			$_SESSION['id'] = $results;
 
 			header('Location: mainpage.php');
 		}
