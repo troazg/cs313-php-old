@@ -4,13 +4,24 @@ session_start();
 
 include('connection.php');
 
-$query = "SELECT diary FROM users WHERE id = '".$_SESSION['id']."' LIMIT 1";
+function debug_to_console( $data ) {
+    $output = $data;
+    if ( is_array( $output ) )
+        $output = implode( ',', $output);
 
-$result = mysqli_query($link, $query);
+    echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
+}
 
-$row = mysqli_fetch_array($result);
+$query = "SELECT diary_text FROM diaries AS d JOIN users AS u ON d.diary_id = u.user_diary WHERE user_id = '".$_SESSION['id']."' LIMIT 1";
 
-$diary = $row['diary'];
+$result = pg_query($db, $query);
+
+$row = pg_fetch_array($result);
+
+$diary = $row['diary_text'];
+
+debug_to_console("Trying here");
+debug_to_console($diary);
 
 
 ?>
