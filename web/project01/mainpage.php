@@ -50,12 +50,6 @@ debug_to_console($diary);
 
 	<script> 
 
-    $.get("/menuBar.html", function(data) {
-
-		$("#menuBar").html(data);
-
-	});
-
     var page = "pageNotepad";
     </script> 
 
@@ -103,6 +97,8 @@ debug_to_console($diary);
 
 <div id="menuBar"></div>
 <div class="container text-center" id="main"> 
+
+	<?php debug_to_console("In the body"); ?>
 	
 		
 
