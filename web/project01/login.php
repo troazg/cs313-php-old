@@ -2,11 +2,13 @@
 
 session_start();
 
+//include_once('debugHelper.php');
+
 
 if ($_GET['logout'] == 1 AND $_SESSION['id']){
 
 	session_destroy();
-	debug_to_console("Logout Action");
+	//debug_to_console("Logout Action");
 	$message = "You have been logged out. Have a great day!";
 }
 
@@ -14,7 +16,7 @@ include("connection.php");
 
 if ($_POST['submit'] == "Sign Up") {
 
-	debug_to_console('You clicked sign up');
+	//debug_to_console('You clicked sign up');
 
 	if (!$_POST['email']) 
 		$error .= "<br>Please enter your loginEmail";
@@ -39,20 +41,20 @@ if ($_POST['submit'] == "Sign Up") {
 		$error = "<strong>There were errors in your signup details:</strong> ".$error;
 	else {
 
-		debug_to_console("Checking the DB");
+		//debug_to_console("Checking the DB");
 
 		//$query = "SELECT * FROM users WHERE user_email = '" . pg_escape_string($db, $_POST['email']) . "'";
 		$query = $db->prepare('SELECT * FROM users WHERE user_email = :email');
 		$query->bindValue(':email', $_POST['email'], PDO::PARAM_STR);
 		$query->execute();
-		$rows = $query->fetchAll(PDO::FETCH_ASSOC);
+		$rows = $query->fetch(PDO::FETCH_ASSOC);
 
 
 		if ($rows)
 			$error = "There is already an account with that email address. Do you want to log in?";
 		else {
 
-			debug_to_console("Creating new account");
+			//debug_to_console("Creating new account");
 
 			$today = date("Y-m-d");
 			$query1 = $db->prepare('INSERT INTO diaries (diary_last_modified) VALUES (:today)');
@@ -74,15 +76,15 @@ if ($_POST['submit'] == "Sign Up") {
 			$userID = $db->lastInsertId();
 
 
-			echo "You've been signed up!";
+			//echo "You've been signed up!";
 
 			
 
 			$_SESSION['id'] = $userID;
-			debug_to_console($userID);
+			//debug_to_console($userID);
 
 
-			// header('Location: mainpage.php');
+			header('Location: mainpage.php');
 		}
 
 	}
@@ -91,19 +93,30 @@ if ($_POST['submit'] == "Sign Up") {
 
 if ($_POST['submit'] == "Log In") {
 
-	debug_to_console("Trying to log in");
+	//debug_to_console("Trying to log in");
 
-	$query = "SELECT * FROM `users` WHERE email = '".mysqli_real_escape_string($link, $_POST['loginEmail'])."' AND password = '".md5(md5($_POST['loginEmail']).$_POST['loginPassword'])."' LIMIT 1";
+	
+	$passhash1 = md5(md5($_POST['loginEmail']).$_POST['loginPassword']);
 
-	$result = mysqli_query($link, $query);
+	//debug_to_console($passhash1);
 
-	$row = mysqli_fetch_array($result);
+	$em = $_POST['loginEmail'];
+	$query = $db->prepare('SELECT * FROM users WHERE user_email = :email AND user_password = :passhash LIMIT 1');
+	$query->execute(array(':email' => $em, ':passhash' => $passhash1));
+	//$query->bindValue(':email', $_POST['loginEmail'], PDO::PARAM_STR);
+	//$query->bindValue(':passhash', $passhash1, PDO::PARAM_STR);
+	//$query->execute();
+	
+	$rows = $query->fetch(PDO::FETCH_ASSOC); 
 
-	if ($row) {
+	
 
-		$_SESSION['id'] = $row['id'];
+	
+	if ($rows) {
 
-		// header('Location: mainpage.php');
+		$_SESSION['id'] = $rows['user_id'];
+
+		header('Location: mainpage.php');
 	} else {
 
 		$error = "<strong>We could not find a user with that email and password. Please try again.</strong>";

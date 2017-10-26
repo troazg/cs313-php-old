@@ -2,14 +2,20 @@
 
 $dbUrl = getenv('DATABASE_URL');
 
-$dbopts = parse_url($dbUrl);
+if (!empty($dbUrl)) {
 
-$dbHost = $dbopts["host"];
-$dbPort = $dbopts["port"];
-$dbUser = $dbopts["user"];
-$dbPassword = $dbopts["pass"];
-$dbName = ltrim($dbopts["path"],'/');
+	$dbopts = parse_url($dbUrl);
 
-$db = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=$dbName", $dbUser, $dbPassword);
+	$dbHost = $dbopts["host"];
+	$dbPort = $dbopts["port"];
+	$dbUser = $dbopts["user"];
+	$dbPassword = $dbopts["pass"];
+	$dbName = ltrim($dbopts["path"],'/');
+
+	$db = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=$dbName", $dbUser, $dbPassword);
+
+} else {
+	$db = new PDO('pgsql:host=localhost;dbname=mydb', 'bnelson');
+}
 
 // ?>

@@ -2,21 +2,16 @@
 
 include('login.php');
 
-function debug_to_console( $data ) {
-    $output = $data;
-    if ( is_array( $output ) )
-        $output = implode( ',', $output);
-
-    echo "<script type='text/javascript'>console.log( 'Debug Objects: " . $output . "' );</script>";
-}
+include_once('debugHelper.php');
 
 debug_to_console("Loaded signin page");
 
-foreach ($db->query('SELECT * FROM users') as $row) {
-	echo 'ID: '.$row['user_id'];
-	echo ' | Email: '.$row['user_email'];
-	echo ' | Diary: '.$row['user_diary'];
-}
+// foreach ($db->query('SELECT * FROM users') as $row) {
+// 	echo 'ID: '.$row['user_id'];
+// 	echo ' | Email: '.$row['user_email'];
+// 	echo ' | Passhash: '.$row['user_password'];
+// 	echo ' | Diary: '.$row['user_diary'];
+// }
 
 ?>
 
@@ -53,7 +48,7 @@ foreach ($db->query('SELECT * FROM users') as $row) {
 <div class="row">
 <div class="col-md-6 col-md-offset-3">
 
-<div>
+<div id="title">
 	<h1>Online Notepad</h1>
 	<p class="lead">Access your notepad from anywhere with an internet connection.</p>
 </div>
