@@ -60,14 +60,16 @@ if ($_POST['submit'] == "Sign Up") {
 			$query->bindValue(':email', $_POST['email'], PDO::PARAM_STR);
 			$query->bindValue(':passhash', $passhash, PDO::PARAM_STR);
 			$query->execute();
-			$rows = $query->fetchAll(PDO::FETCH_ASSOC);
+			//$rows = $query->fetchAll(PDO::FETCH_ASSOC);
+			$prevID = $db->lastInsertId();
+
 
 			echo "You've been signed up!";
 
 			
 
-			$_SESSION['id'] = $rows['user_id'];
-			debug_to_console($rows['user_id']);
+			$_SESSION['id'] = $prevID;
+			debug_to_console($prevID);
 
 
 			// header('Location: mainpage.php');
