@@ -2,7 +2,7 @@
 
 session_start();
 
-include('connection.php');
+// include('connection.php');
 
 function debug_to_console( $data ) {
     $output = $data;

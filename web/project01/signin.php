@@ -2,6 +2,16 @@
 
 include('login.php');
 
+function debug_to_console( $data ) {
+    $output = $data;
+    if ( is_array( $output ) )
+        $output = implode( ',', $output);
+
+    echo "<script type='text/javascript'>console.log( 'Debug Objects: " . $output . "' );</script>";
+}
+
+debug_to_console("Testing123");
+
 ?>
 
 <!DOCTYPE html>
@@ -26,33 +36,7 @@ include('login.php');
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-
-    <style type="text/css">
-
-    	body {
-		
-		padding: 0 !important;
-	}
-
-	#main {
-		background-image: url("note.jpg");
-		width: 100%;
-		height: 100%;
-		background-size: contain;
-		background-position: center;
-		background-repeat: no-repeat;
-	}
-
-	#signUpForm {
-		margin-top: 20px;
-	}
-
-	h2 {
-		margin-top: 30px;
-	}
-
-    </style>
-	
+	<link rel="stylesheet" type="text/css" href="styles.css">
     
 	
 
