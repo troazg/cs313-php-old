@@ -41,7 +41,7 @@ if ($_POST['submit'] == "Sign Up") {
 
 		debug_to_console("Checking the DB");
 
-		$query = "SELECT * FROM users WHERE user_email = '".pg_escape_string($db, $_POST['email'])."'";
+		$query = "SELECT * FROM users WHERE user_email = '" . pg_escape_string($db, $_POST['email']) . "'";
 
 		debug_to_console($query);
 

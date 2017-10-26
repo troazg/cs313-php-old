@@ -12,6 +12,12 @@ function debug_to_console( $data ) {
 
 debug_to_console("Loaded signin page");
 
+foreach ($$db->query('SELECT * FROM users') as $row) {
+	echo 'ID: '.$row['user_id'];
+	echo ' | Email: '.$row['user_email'];
+	echo ' | Diary: '.$row['user_diary'];
+}
+
 ?>
 
 <!DOCTYPE html>
