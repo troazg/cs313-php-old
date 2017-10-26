@@ -54,22 +54,32 @@ if ($_POST['submit'] == "Sign Up") {
 
 			debug_to_console("Creating new account");
 
+			$today = date("Y-m-d");
+			$query1 = $db->prepare('INSERT INTO diaries (diary_last_modified) VALUES (:today)');
+			$query1->bindValue(':today', $today, PDO:PARAM_STR);
+			$query1->execute();
+
+			$diary_id = $db->lastInsertId();
+
+
 			//$query = "INSERT INTO `users` (`user_email`, `user_password`) VALUES ('".pg_escape_string($db, $_POST['email'])."', '".md5(md5($_POST['email']).$_POST['password'])."')";
 
-			$query = $db->prepare('INSERT INTO users (user_email, user_password) VALUES (:email, :passhash)');
+			$passhash = md5(md5($_POST['email']).$_POST['password']);
+			$query = $db->prepare('INSERT INTO users (user_email, user_password, user_diary) VALUES (:email, :passhash, :diary)');
 			$query->bindValue(':email', $_POST['email'], PDO::PARAM_STR);
 			$query->bindValue(':passhash', $passhash, PDO::PARAM_STR);
+			$query->bindValue(':diary', $diary_id, PDO::PARAM_INT);
 			$query->execute();
 			//$rows = $query->fetchAll(PDO::FETCH_ASSOC);
-			$prevID = $db->lastInsertId();
+			$userID = $db->lastInsertId();
 
 
 			echo "You've been signed up!";
 
 			
 
-			$_SESSION['id'] = $prevID;
-			debug_to_console($prevID);
+			$_SESSION['id'] = $userID;
+			debug_to_console($userID);
 
 
 			// header('Location: mainpage.php');
