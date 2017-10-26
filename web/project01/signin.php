@@ -10,7 +10,7 @@ function debug_to_console( $data ) {
     echo "<script type='text/javascript'>console.log( 'Debug Objects: " . $output . "' );</script>";
 }
 
-debug_to_console("Testing123");
+debug_to_console("Loaded signin page");
 
 ?>
 

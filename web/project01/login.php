@@ -6,6 +6,7 @@ session_start();
 if ($_GET['logout'] == 1 AND $_SESSION['id']){
 
 	session_destroy();
+	debug_to_console("Logout Action");
 	$message = "You have been logged out. Have a great day!";
 }
 
@@ -38,6 +39,8 @@ if ($_POST['submit'] == "Sign Up") {
 		$error = "<strong>There were errors in your signup details:</strong> ".$error;
 	else {
 
+		debug_to_console("Checking the DB");
+
 		$query = "SELECT * FROM users WHERE user_email = '".pg_escape_string($db, $_POST['email'])."'";
 
 		debug_to_console($query);
@@ -51,6 +54,8 @@ if ($_POST['submit'] == "Sign Up") {
 		if ($results)
 			$error = "There is already an account with that email address. Do you want to log in?";
 		else {
+
+			debug_to_console("Creating new account");
 
 			$query = "INSERT INTO `users` (`user_email`, `user_password`) VALUES ('".pg_escape_string($db, $_POST['email'])."', '".md5(md5($_POST['email']).$_POST['password'])."')";
 
@@ -74,6 +79,8 @@ if ($_POST['submit'] == "Sign Up") {
 }
 
 if ($_POST['submit'] == "Log In") {
+
+	debug_to_console("Trying to log in");
 
 	$query = "SELECT * FROM `users` WHERE email = '".mysqli_real_escape_string($link, $_POST['loginEmail'])."' AND password = '".md5(md5($_POST['loginEmail']).$_POST['loginPassword'])."' LIMIT 1";
 
