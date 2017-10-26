@@ -41,35 +41,34 @@ if ($_POST['submit'] == "Sign Up") {
 
 		debug_to_console("Checking the DB");
 
-		$query = "SELECT * FROM users WHERE user_email = '" . pg_escape_string($db, $_POST['email']) . "'";
+		//$query = "SELECT * FROM users WHERE user_email = '" . pg_escape_string($db, $_POST['email']) . "'";
+		$query = $db->prepare('SELECT * FROM users WHERE user_email = :email');
+		$query->bindValue(':email', $_POST['email'], PDO::PARAM_STR);
+		$query->execute();
+		$rows = $query->fetchAll(PDO::FETCH_ASSOC);
 
-		debug_to_console($query);
 
-		$result = pg_query($db, $query);
-
-		debug_to_console($result);
-
-		$results = pg_num_rows($result);
-
-		if ($results)
+		if ($rows)
 			$error = "There is already an account with that email address. Do you want to log in?";
 		else {
 
 			debug_to_console("Creating new account");
 
-			$query = "INSERT INTO `users` (`user_email`, `user_password`) VALUES ('".pg_escape_string($db, $_POST['email'])."', '".md5(md5($_POST['email']).$_POST['password'])."')";
+			//$query = "INSERT INTO `users` (`user_email`, `user_password`) VALUES ('".pg_escape_string($db, $_POST['email'])."', '".md5(md5($_POST['email']).$_POST['password'])."')";
 
-			pg_query($db, $query);
+			$query = $db->prepare('INSERT INTO users (user_email, user_password) VALUES (:email, :passhash)');
+			$query->bindValue(':email', $_POST['email'], PDO::PARAM_STR);
+			$query->bindValue(':passhash', $passhash, PDO::PARAM_STR);
+			$query->execute();
+			$rows = $query->fetchAll(PDO::FETCH_ASSOC);
 
 			echo "You've been signed up!";
 
-			$query2 = "SELECT user_id FROM users WHERE user_email = '".pg_escape_string($db, $_POST['email'])."'";
+			
 
-			debug_to_console($query2);
+			$_SESSION['id'] = $rows['user_id'];
+			debug_to_console($rows['user_id']);
 
-			$results = pg_query($db, $query2);
-
-			$_SESSION['id'] = $results;
 
 			// header('Location: mainpage.php');
 		}
