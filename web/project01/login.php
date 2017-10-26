@@ -56,7 +56,7 @@ if ($_POST['submit'] == "Sign Up") {
 
 			$today = date("Y-m-d");
 			$query1 = $db->prepare('INSERT INTO diaries (diary_last_modified) VALUES (:today)');
-			$query1->bindValue(':today', $today, PDO:PARAM_STR);
+			$query1->bindValue(':today', $today, PDO::PARAM_STR);
 			$query1->execute();
 
 			$diary_id = $db->lastInsertId();
