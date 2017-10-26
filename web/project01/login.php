@@ -71,7 +71,7 @@ if ($_POST['submit'] == "Sign Up") {
 
 			$_SESSION['id'] = $results;
 
-			header('Location: mainpage.php');
+			// header('Location: mainpage.php');
 		}
 
 	}
@@ -92,7 +92,7 @@ if ($_POST['submit'] == "Log In") {
 
 		$_SESSION['id'] = $row['id'];
 
-		header('Location: mainpage.php');
+		// header('Location: mainpage.php');
 	} else {
 
 		$error = "<strong>We could not find a user with that email and password. Please try again.</strong>";
